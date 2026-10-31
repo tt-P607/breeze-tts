@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import tempfile
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Optional
 
@@ -1249,9 +1250,10 @@ class BreezeGenerationMixin(GenerationMixin):
 
                     if cutoff_idx == 0:
                         # write log to file
-                        with open(
-                            "/tmp/breeze_generation_warnings.log", "a"
-                        ) as log_file:
+                        warning_log = os.path.join(
+                            tempfile.gettempdir(), "breeze_generation_warnings.log"
+                        )
+                        with open(warning_log, "a", encoding="utf-8") as log_file:
                             log_file.write(
                                 "[no-code] No codebook tokens were generated, generating silent audio.\n"
                             )
